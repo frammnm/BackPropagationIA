@@ -1,9 +1,18 @@
+# Archivo: RedNeural.py
+# Este archivo contiene las clases utilizadas para la implementacion de una
+# red neural.
+# Autores: 
+#    - Francisco Martinez 09-10502
+#    - Gabriel   Alvarez  09-10029
 
 import random
 import math
 
-def RedNeural: 
-  APRENDIZAJE = 0.5 
+###############################################################################
+#############################      RED NEURAL      ############################
+###############################################################################
+class RedNeural: 
+  APRENDIZAJE = 0.5
 
   def __init__(self, cantidadEntradas, cantidadNeuronas, cantidadSalidas, pesosNeuronas, biasNeuronas = None, pesosSalidas, biasSalidas = None):
     
@@ -59,14 +68,15 @@ def RedNeural:
         errorRespectoPeso = erroresDerivadasRespectoNeuronasOcultas[i] * self.capa_oculta.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
         self.capa_oculta.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
 
-
     for i in range(len(self.capa_oculta.neuronas)):
       for j in range(len(self.capa_oculta.neuronas[i].pesos)):
         errorRespectoPeso = erroresDerivadasRespectoNeuronasOcultas[i] * self.capa_oculta.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
         self.capa_oculta.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
 
-
-def CapaNeuronas:
+###############################################################################
+#############################     CAPA NEURONAS    ############################
+###############################################################################
+class CapaNeuronas:
 
   def __init__(self, cantidad, bias):
     self.bias = bias
@@ -88,7 +98,11 @@ def CapaNeuronas:
     return salidas
 
 
-def Neurona: 
+
+###############################################################################
+#############################        NEURONA       ############################
+###############################################################################
+class Neurona: 
 
   def __init__(self, bias):
     self.bias = bias

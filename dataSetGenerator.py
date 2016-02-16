@@ -7,19 +7,17 @@
 
 import random
 
-# Generates a data set of numbers inside the area of a square.
+# Generates a data set of points (x,y) inside the area of a square.
 def generateDataSet(n):
   try:
     f = open(str(n)+'_DataSet', 'w') 
-    nc = 0 # The number of points inside the area of a circle.
-    ns = 0 # The number of points inside the area of a square.
+    nc = 0 # The number of points inside the circle.
+    ns = 0 # The number of points inside the square and outside the circle.
     i = 0
     while (i < n):
-
       x = random.uniform(0,20)
       y = random.uniform(0,20)
       point = (x - 10)**2 + (y - 10)**2
-  
       if ((point <= 49) and (nc < n/2)):
         nc += 1
         f.write(str(x)+' '+str(y)+' -1\n')
@@ -31,10 +29,8 @@ def generateDataSet(n):
       elif ((point > 49) and (ns >= n/2)):
         continue
       i += 1
-	  
-    f.close()
+	  f.close()
     return
-
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
