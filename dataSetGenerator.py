@@ -9,13 +9,11 @@ import random
 
 # Generates a data set of numbers inside the area of a square.
 def generateDataSet(n):
-  nc = 0 # The number of points inside the area of a circle.
-  ns = 0 # The number of points inside the area of a square.
-  i = 0
-  
   try:
     f = open(str(n)+'_DataSet', 'w') 
-  
+    nc = 0 # The number of points inside the area of a circle.
+    ns = 0 # The number of points inside the area of a square.
+    i = 0
     while (i < n):
 
       x = random.uniform(0,20)
