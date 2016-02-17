@@ -15,7 +15,6 @@ class RedNeural:
   APRENDIZAJE = 0.5
 
   def __init__(self, cantidadEntradas, cantidadNeuronas, cantidadSalidas, pesosNeuronas, biasNeuronas = None, pesosSalidas, biasSalidas = None):
-    
     self.cantidadEntradas = cantidadEntradas
     self.capa_oculta = CapaNeuronas(cantidadNeuronas,biasNeuronas)
     self.capa_salida = CapaNeuronas(cantidadSalidas,biasSalidas)
@@ -96,8 +95,6 @@ class CapaNeuronas:
     for neurona in self.neuronas:
       salidas.append(neurona.evaluacion)
     return salidas
-
-
 
 ###############################################################################
 #############################        NEURONA       ############################
