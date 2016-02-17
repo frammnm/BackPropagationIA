@@ -7,6 +7,7 @@
 
 import random
 import math
+import DataSetEjercicio1
 
 ###############################################################################
 #############################      RED NEURAL      ############################
@@ -38,7 +39,7 @@ class RedNeural:
     d = 1 / math.sqrt(self.cantidadEntradas) # Numero utilizado para el rango de los pesos.
     num_peso = 0
     for i in range(len(self.capa_salida.neuronas)):
-      for j in range(self.capa_oculta.neuronas):
+      for j in range(len(self.capa_oculta.neuronas)):
           if not pesosSalidas:
             self.capa_salida.neuronas[i].pesos.append(random.uniform(-d,d))
           else:
@@ -47,7 +48,7 @@ class RedNeural:
 
   def inspect(self):
     print('------')
-    print('Entradas: {}'.format(self.num_inputs))
+    print('Entradas: {}'.format(self.cantidadEntradas))
     print('------')
     print('Capa oculta')
     self.capa_oculta.inspect()
@@ -95,10 +96,11 @@ class CapaNeuronas:
     for i in range(cantidad):
       self.neuronas.append(Neurona(self.bias))
 
-  def inspect():
+  def inspect(self):
     print('Neuronas:', len(self.neuronas))
     for n in range(len(self.neuronas)):
       print(' Neurona', n)
+      print(' Evaluacion', self.neuronas[n].evaluacion)
       for w in range(len(self.neuronas[n].pesos)):
           print('  Peso:', self.neuronas[n].pesos[w])
       print('  Bias:', self.bias)
@@ -152,3 +154,12 @@ class Neurona:
 
   def calcular_error(self, valor_objetivo):
     return 0.5 * (valor_objetivo - self.evaluacion) ** 2
+
+
+entradas,salidas = DataSetEjercicio1.generar_data_set_lista(4)
+print entradas
+print salidas
+
+nn = RedNeural(4, 2, 2, biasNeuronas = 0.5, biasSalidas = 0.5)
+nn.alimentar_neuronas(entradas)
+nn.inspect()
