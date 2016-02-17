@@ -12,9 +12,11 @@ import math
 #############################      RED NEURAL      ############################
 ###############################################################################
 class RedNeural: 
-  APRENDIZAJE = 0.5
+  APRENDIZAJE = 0.5 # Constante de aprendizaje.
 
-  def __init__(self, cantidadEntradas, cantidadNeuronas, cantidadSalidas, pesosNeuronas, biasNeuronas = None, pesosSalidas, biasSalidas = None):
+  def __init__(self, cantidadEntradas, cantidadNeuronas, cantidadSalidas, 
+               pesosNeuronas = None, biasNeuronas = None, pesosSalidas = None, 
+               biasSalidas = None):
     self.cantidadEntradas = cantidadEntradas
     self.capa_oculta = CapaNeuronas(cantidadNeuronas,biasNeuronas)
     self.capa_salida = CapaNeuronas(cantidadSalidas,biasSalidas)
@@ -22,16 +24,26 @@ class RedNeural:
     self.inicializar_pesos_ocultos_salida(pesosSalidas)
 
   def inicializar_pesos_entrada_ocultos(self, pesosNeuronas):
+    d = 1 / math.sqrt(self.cantidadEntradas) # Numero utilizado para el rango de los pesos.
+    num_peso = 0
     for i in range(len(self.capa_oculta.neuronas)):
       for j in range(self.cantidadEntradas):
-          self.capa_oculta.neuronas[i].pesos.append(pesosNeuronas[n])
-          n += 1 
+          if not pesosNeuronas:
+            self.capa_oculta.neuronas[i].pesos.append(random.uniform(-d,d))
+          else:
+            self.capa_oculta.neuronas[i].pesos.append(pesosNeuronas[num_peso])
+          num_peso += 1 
 
   def inicializar_pesos_ocultos_salida(self, pesosSalidas):
+    d = 1 / math.sqrt(self.cantidadEntradas) # Numero utilizado para el rango de los pesos.
+    num_peso = 0
     for i in range(len(self.capa_salida.neuronas)):
       for j in range(self.capa_oculta.neuronas):
-          self.capa_salida.neuronas[i].pesos.append(pesosSalidas[n])
-          n += 1 
+          if not pesosSalidas:
+            self.capa_salida.neuronas[i].pesos.append(random.uniform(-d,d))
+          else:
+            self.capa_salida.neuronas[i].pesos.append(pesosSalidas[num_peso])
+          num_peso += 1 
 
   def inspect(self):
     print('------')
@@ -78,17 +90,24 @@ class RedNeural:
 class CapaNeuronas:
 
   def __init__(self, cantidad, bias):
-    self.bias = bias
+    self.bias = bias if bias else random.random()
     self.neuronas = []
     for i in range(cantidad):
       self.neuronas.append(Neurona(self.bias))
 
   def inspect():
+    print('Neuronas:', len(self.neuronas))
+    for n in range(len(self.neuronas)):
+      print(' Neurona', n)
+      for w in range(len(self.neuronas[n].pesos)):
+          print('  Peso:', self.neuronas[n].pesos[w])
+      print('  Bias:', self.bias)
 
-  def calcular_salidas():
+  def calcular_salidas(self, entradas):
     salidas = []
     for neurona in self.neuronas:
-      salidas.append(neurona.calcular_salida(entradas)) 
+      salidas.append(neurona.calcular_salida(entradas))
+    return salidas
 
   def devolver_salidas():
     salidas = [] 
@@ -103,8 +122,7 @@ class Neurona:
 
   def __init__(self, bias):
     self.bias = bias
-    self.pesos = [] 
-    self.salidas = [] 
+    self.pesos = []
 
   def calcular_salida(self, entradas):
     self.entradas = entradas
@@ -113,7 +131,7 @@ class Neurona:
 
   def calcular_entrada_total(self):
     total = 0
-    for i in range(len(self.inputs)):
+    for i in range(len(self.entradas)):
       total += self.entradas[i] * self.pesos[i]
     return total + self.bias
 
