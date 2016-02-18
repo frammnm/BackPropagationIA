@@ -14,8 +14,7 @@ def generar_data_set(n):
     f = open(str(n)+'_DataSet', 'w') 
     nc = 0 # Numero de puntos dentro del circulo.
     ns = 0 # Numero de puntos dentro del cuadrado y afuera del circulo.
-    i = 0
-    while (i < n):
+    for i in range(n):
       x = random.uniform(0,20)
       y = random.uniform(0,20)
       punto = (x - 10)**2 + (y - 10)**2
@@ -29,36 +28,56 @@ def generar_data_set(n):
         f.write(str(x)+' '+str(y)+' 1\n')
       elif ((punto > 49) and (ns >= n/2)):
         continue
-      i += 1
     f.close()
     return
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
+# Lee un data set, en el archivo de texto con nombre "nombre",
+# el data set debe ser el del ejercicio 1. Durante la lectura
+# de archivo, los puntos leidos son normalizados.
+def leer_data_set(nombre):
+  try:
+    puntos_y_salidas = []
+    f = open(nombre,'r') 
+    datos = f.readlines()
+    for linea in datos:
+        palabras = linea.split()
+        x = (float(palabras[0]))
+        y = (float(palabras[1]))
+        xn = x / 20 # Normalizar el punto.
+        yn = y / 20 # Normalizar el punto.
+        if palabras[2] == "-1":
+          puntos_y_salidas.append([[xn,yn],[0]])
+        else:
+          puntos_y_salidas.append([[xn,yn],[1]])
+    f.close()
+    return puntos_y_salidas
+  except IOError as e:
+    print "I/O error({0}): {1}".format(e.errno, e.strerror)
+    return []
+
 # Genera un data set balanceado, de tamano n, para el ejercicio 1.
-# Se crea una lista de puntos y de salidas; y se retornan en una tupla.
+# Se crea una lista de listas que contiene los puntos y sus salidas.
 def generar_data_set_lista(n):
-  puntos = []
-  salidas = [] 
+  puntos_y_salidas = []
   nc = 0 # Numero de puntos dentro del circulo.
   ns = 0 # Numero de puntos dentro del cuadrado y afuera del circulo.
-  i = 0
-  while (i < n):
+  for i in range(n):
     x = random.uniform(0,20)
     y = random.uniform(0,20)
+    xn = x / 20 # Normalizar el punto.
+    yn = y / 20 # Normalizar el punto.
     point = (x - 10)**2 + (y - 10)**2
     if ((point <= 49) and (nc < n/2)):
       nc += 1
-      puntos.append(point)
-      salidas.append(1)
+      puntos_y_salidas.append([[xn,yn],[1]])
     elif ((point <= 49) and (nc >= n/2)):
       continue
     elif ((point > 49) and (ns < n/2)):
       ns += 1
-      puntos.append(point)
-      salidas.append(-1)
+      puntos_y_salidas.append([[xn,yn],[0]])
     elif ((point > 49) and (ns >= n/2)):
       continue
-    i += 1
-  return (puntos,salidas)
+  return puntos_y_salidas
     
