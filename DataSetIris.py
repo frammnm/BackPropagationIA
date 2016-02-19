@@ -1,13 +1,12 @@
 # Archivo: DataSetIris.py
 # Este archivo contiene el metodo generador del data Set para el ejercicio
-# 1.
+# 3.
 # Autores: 
 #    - Francisco Martinez 09-10502
 #    - Gabriel   Alvarez  09-10029
 
 # Lee un data set, en el archivo de texto con nombre "nombre",
-# el data set debe ser el del ejercicio 3. Durante la lectura
-# de archivo, los puntos leidos son normalizados.
+# el data set debe ser el del ejercicio 3.
 def leer_data_set(nombre):
   try:
     xs = []
