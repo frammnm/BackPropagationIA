@@ -167,12 +167,12 @@ class Neurona:
   def calcular_error(self, valor_objetivo):
     return 0.5 * (valor_objetivo - self.evaluacion) ** 2
 
-data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
-data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
-data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
-data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
-data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
-data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
+# data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
+# data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
+# data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
+# data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
+# data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
+# data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
 
 # for j in range(2,11):
 
@@ -186,40 +186,40 @@ data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet"
 
 #   print(len(data_set_3[0][0]),j,nn.calcular_error_total(data_set_3)/2000,time.time() - tiempo)
 
-#data_set_7a = DataSetIris.obtener_data_set_binario("iris75.data")
-# data_set_7b = DataSetIris.obtener_data_set_ternario("iris75.data")
-# data_set_8a = DataSetIris.obtener_data_set_binario("iris90.data")
-# data_set_8b = DataSetIris.obtener_data_set_ternario("iris90.data")
-# data_set_9a = DataSetIris.obtener_data_set_binario("iris105.data")
-# data_set_9b = DataSetIris.obtener_data_set_ternario("iris105.data")
-# data_set_10a = DataSetIris.obtener_data_set_binario("iris120.data")
-# data_set_10b = DataSetIris.obtener_data_set_ternario("iris120.data")
-# data_set_11a = DataSetIris.obtener_data_set_binario("iris135.data")
-# data_set_11b = DataSetIris.obtener_data_set_ternario("iris135.data")
-try:
-  f = open('Resultados_2000_Nosotros.txt', 'w')
-  f.write("Neuronas Error-Total Error-Promedio Tiempo\n")
-  for j in range(2,11):
-    nn = RedNeural(len(data_set_6[0][0]), j, len(data_set_6[0][1]))
-    tiempo = time.time()
-    i = 0
-    iteraciones = 0
-    while True:
-      entradas_entrenamiento = data_set_6[i][0]
-      salidas_entrenamiento = data_set_6[i][1]
-      nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
-      if i == 1999:
-        i = 0
-      else:
-        i += 1
-      if (iteraciones == 10000):
-        break
-      iteraciones += 1
-    error_total = nn.calcular_error_total(data_set_6)
-    f.write(str(j)+" "+str(error_total)+" "+str(error_total/1000)+" "+str(time.time() - tiempo)+"\n")
-  f.close()
-except IOError as e:
-    print "I/O error({0}): {1}".format(e.errno, e.strerror)
+# data_set_7a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris75.data")
+# data_set_7b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris75.data")
+# data_set_8a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris90.data")
+# data_set_8b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris90.data")
+# data_set_9a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris105.data")
+# data_set_9b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris105.data")
+# data_set_10a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris120.data")
+# data_set_10b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris120.data")
+# data_set_11a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris135.data")
+# data_set_11b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris135.data")
+# try:
+#   f = open('Resultados_Iris_135_Ternaria.txt', 'w')
+#   f.write("Neuronas Error-Total Error-Promedio Tiempo\n")
+#   for j in range(4,11):
+#     nn = RedNeural(len(data_set_11b[0][0]), j, len(data_set_11b[0][1]))
+#     tiempo = time.time()
+#     i = 0
+#     iteraciones = 0
+#     while True:
+#       entradas_entrenamiento = data_set_11b[i][0]
+#       salidas_entrenamiento = data_set_11b[i][1]
+#       nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+#       if i == 134:
+#         i = 0
+#       else:
+#         i += 1
+#       if (iteraciones == 10000):
+#         break
+#       iteraciones += 1
+#     error_total = nn.calcular_error_total(data_set_11b)
+#     f.write(str(j)+" "+str(error_total)+" "+str(error_total/1000)+" "+str(time.time() - tiempo)+"\n")
+#   f.close()
+# except IOError as e:
+#     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
 # try:
 #     f = open('Resultados_Para_Grafica_R.txt', 'w')
