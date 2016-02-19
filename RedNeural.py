@@ -167,12 +167,12 @@ class Neurona:
   def calcular_error(self, valor_objetivo):
     return 0.5 * (valor_objetivo - self.evaluacion) ** 2
 
-# data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
-# data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
-# data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
-# data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
-# data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
-# data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
+data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
+data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
+data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
+data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
+data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
+data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
 
 # for j in range(2,11):
 
@@ -221,22 +221,25 @@ class Neurona:
 # except IOError as e:
 #     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 
-# try:
-#     f = open('Resultados_Para_Grafica_R.txt', 'w')
-#     f.write("X Y Salida"+"\n")
+try:
+    f = open('Resultados_Para_Grafica_R.txt', 'w')
+    f.write("X Y Salida"+"\n")
     
-#     nn = RedNeural(len(data_set_4[0][0]), 2, len(data_set_4[0][1]))
+    nn = RedNeural(len(data_set_3[0][0]), 4, len(data_set_6[0][1]))
 
-#     for i in (range(len(data_set_4))):
-#       entradas_entrenamiento = data_set_4[i][0]
-#       salidas_entrenamiento = data_set_4[i][1]
-#       nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+    for i in (range(len(data_set_3))):
+      entradas_entrenamiento = data_set_3[i][0]
+      salidas_entrenamiento = data_set_3[i][1]
+      nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
 
-#     puntos = DataSetEjercicio1.generar_barrido_cuadrado(20)
-#     for punto in puntos:
-#       salida = nn.alimentar_neuronas(punto)
-#       x, y = punto
-#       f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
-#     f.close()
-# except IOError as e:
-#     print "I/O error({0}): {1}".format(e.errno, e.strerror)
+    print nn.calcular_error_total(data_set_3)/2000 
+
+    puntos = DataSetEjercicio1.generar_barrido_cuadrado(20)
+    for punto in puntos:
+      ptoNormalizado = [punto[0]/20,punto[1]/20]
+      salida = nn.alimentar_neuronas(ptoNormalizado)
+      x, y = punto
+      f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
+    f.close()
+except IOError as e:
+    print "I/O error({0}): {1}".format(e.errno, e.strerror)
