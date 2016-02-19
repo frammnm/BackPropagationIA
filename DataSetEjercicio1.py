@@ -80,3 +80,15 @@ def generar_data_set_lista(n):
     elif ((point > 49) and (ns >= n/2)):
       continue
   return puntos_y_salidas
+
+def generar_barrido_cuadrado(n):
+  puntos_y_salidas = []
+  unidad=n / 100.0
+  y = 0 
+  for i in range(101):
+    x = 0
+    for j in range(101):
+      puntos_y_salidas.append([x,y])
+      x = x + unidad
+    y = y + unidad
+  return puntos_y_salidas
