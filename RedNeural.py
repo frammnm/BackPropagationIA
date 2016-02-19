@@ -62,7 +62,7 @@ class RedNeural:
 
   def alimentar_neuronas(self, entradas):
     salidasOcultas = self.capa_oculta.calcular_salidas(entradas)
-    self.capa_salida.calcular_salidas(salidasOcultas)
+    return self.capa_salida.calcular_salidas(salidasOcultas)
 
   def entrenar(self, entradas, salidas):
     self.alimentar_neuronas(entradas)
@@ -174,17 +174,17 @@ data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
 data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
 data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
 
-for j in range(2,11):
+# for j in range(2,11):
 
-  nn = RedNeural(len(data_set_3[0][0]), j, len(data_set_3[0][1]))
-  tiempo = time.time()
+#   nn = RedNeural(len(data_set_3[0][0]), j, len(data_set_3[0][1]))
+#   tiempo = time.time()
 
-  for i in (range(len(data_set_3))):
-    entradas_entrenamiento = data_set_3[i][0]
-    salidas_entrenamiento = data_set_3[i][1]
-    nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+#   for i in (range(len(data_set_3))):
+#     entradas_entrenamiento = data_set_3[i][0]
+#     salidas_entrenamiento = data_set_3[i][1]
+#     nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
 
-  print(len(data_set_3[0][0]),j,nn.calcular_error_total(data_set_3)/2000,time.time() - tiempo)
+#   print(len(data_set_3[0][0]),j,nn.calcular_error_total(data_set_3)/2000,time.time() - tiempo)
 
 # data_set_7a = DataSetIris.obtener_data_set_binario("iris75.data")
 # data_set_7b = DataSetIris.obtener_data_set_ternario("iris75.data")
@@ -196,22 +196,40 @@ for j in range(2,11):
 # data_set_10b = DataSetIris.obtener_data_set_ternario("iris120.data")
 # data_set_11a = DataSetIris.obtener_data_set_binario("iris135.data")
 # data_set_11b = DataSetIris.obtener_data_set_ternario("iris135.data")
+# try:
+#   f = open('Resultados_2000_Nosotros.txt', 'w')
+#   f.write("Neuronas Error-Total Error-Promedio Tiempo\n")
+#   for j in range(2,11):
+#     nn = RedNeural(len(data_set_6[0][0]), j, len(data_set_6[0][1]))
+#     tiempo = time.time()
+
+#     for i in (range(len(data_set_6))):
+#       entradas_entrenamiento = data_set_6[i][0]
+#       salidas_entrenamiento = data_set_6[i][1]
+#       nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+
+#     error_total = nn.calcular_error_total(data_set_6)
+#     f.write(str(j)+" "+str(error_total)+" "+str(error_total/1000)+" "+str(time.time() - tiempo)+"\n")
+#   f.close()
+# except IOError as e:
+#     print "I/O error({0}): {1}".format(e.errno, e.strerror)
+
 try:
-    f = open('Resultados500_equipo.txt', 'w')
-    f.write("#Neuronas ErrorTotal Tiempo"+"\n")
-    for j in range(2,11):
-      nn = RedNeural(len(data_set_4[0][0]), j, len(data_set_4[0][1]))
-      tiempo = time.time()
+    f = open('Resultados_Para_Grafica_R.txt', 'w')
+    f.write("X Y Salida"+"\n")
+    
+    nn = RedNeural(len(data_set_4[0][0]), 2, len(data_set_4[0][1]))
 
-      for i in (range(len(data_set_4))):
-        entradas_entrenamiento = data_set_4[i][0]
-        salidas_entrenamiento = data_set_4[i][1]
-        nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+    for i in (range(len(data_set_4))):
+      entradas_entrenamiento = data_set_4[i][0]
+      salidas_entrenamiento = data_set_4[i][1]
+      nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
 
-      f.write(str(j)+" "+str(nn.calcular_error_total(data_set_4))+" "+str(time.time() - tiempo)+"\n")
+    puntos = DataSetEjercicio1.generar_barrido_cuadrado(20)
+    for punto in puntos:
+      salida = nn.alimentar_neuronas(punto)
+      x, y = punto
+      f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
     f.close()
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
-
-l = DataSetEjercicio1.generar_barrido_cuadrado(20)
-print l

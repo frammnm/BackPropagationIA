@@ -48,9 +48,9 @@ def leer_data_set(nombre):
         xn = x / 20 # Normalizar el punto.
         yn = y / 20 # Normalizar el punto.
         if palabras[2] == "-1":
-          puntos_y_salidas.append([[xn,yn],[0]])
-        else:
           puntos_y_salidas.append([[xn,yn],[1]])
+        else:
+          puntos_y_salidas.append([[xn,yn],[0]])
     f.close()
     return puntos_y_salidas
   except IOError as e:
@@ -81,9 +81,10 @@ def generar_data_set_lista(n):
       continue
   return puntos_y_salidas
 
+# Genera un data los 10000 puntos utilizados para el ejercicio 2.
 def generar_barrido_cuadrado(n):
   puntos_y_salidas = []
-  unidad=n / 100.0
+  unidad = n / 100.0
   y = 0 
   for i in range(101):
     x = 0
