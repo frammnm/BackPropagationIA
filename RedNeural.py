@@ -8,6 +8,8 @@
 import random
 import math
 import DataSetEjercicio1
+import time 
+import DataSetIris
 
 ###############################################################################
 #############################      RED NEURAL      ############################
@@ -19,13 +21,14 @@ class RedNeural:
                pesosNeuronas = None, biasNeuronas = None, pesosSalidas = None, 
                biasSalidas = None):
     self.cantidadEntradas = cantidadEntradas
+    self.cantidadSalidas = cantidadSalidas
     self.capa_oculta = CapaNeuronas(cantidadNeuronas,biasNeuronas)
     self.capa_salida = CapaNeuronas(cantidadSalidas,biasSalidas)
     self.inicializar_pesos_entrada_ocultos(pesosNeuronas)
     self.inicializar_pesos_ocultos_salida(pesosSalidas)
 
   def inicializar_pesos_entrada_ocultos(self, pesosNeuronas):
-    d = 1 / math.sqrt(self.cantidadEntradas) # Numero utilizado para el rango de los pesos.
+    d = math.sqrt(6/(self.cantidadEntradas + len(self.capa_oculta.neuronas))) # Numero utilizado para el rango de los pesos.
     num_peso = 0
     for i in range(len(self.capa_oculta.neuronas)):
       for j in range(self.cantidadEntradas):
@@ -36,7 +39,7 @@ class RedNeural:
           num_peso += 1 
 
   def inicializar_pesos_ocultos_salida(self, pesosSalidas):
-    d = 1 / math.sqrt(self.cantidadEntradas) # Numero utilizado para el rango de los pesos.
+    d = math.sqrt(6/(self.cantidadSalidas + len(self.capa_oculta.neuronas))) # Numero utilizado para el rango de los pesos.
     num_peso = 0
     for i in range(len(self.capa_salida.neuronas)):
       for j in range(len(self.capa_oculta.neuronas)):
@@ -77,13 +80,23 @@ class RedNeural:
 
     for i in range(len(self.capa_salida.neuronas)):
       for j in range(len(self.capa_salida.neuronas[i].pesos)):
-        errorRespectoPeso = erroresDerivadasRespectoNeuronasOcultas[i] * self.capa_oculta.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
-        self.capa_oculta.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
+        errorRespectoPeso = erroresDerivadasRespectoNeuronasSalidas[i] * self.capa_salida.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
+        self.capa_salida.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
 
     for i in range(len(self.capa_oculta.neuronas)):
       for j in range(len(self.capa_oculta.neuronas[i].pesos)):
         errorRespectoPeso = erroresDerivadasRespectoNeuronasOcultas[i] * self.capa_oculta.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
         self.capa_oculta.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
+  
+  def calcular_error_total(self, training_sets):
+    total_error = 0
+    for t in range(len(training_sets)):
+      training_inputs, training_outputs = training_sets[t]
+      self.alimentar_neuronas(training_inputs)
+      for o in range(len(training_outputs)):
+        #   print (t,o,total_error)
+        total_error += self.capa_salida.neuronas[o].calcular_error(training_outputs[o])
+    return total_error
 
 ###############################################################################
 #############################     CAPA NEURONAS    ############################
@@ -120,7 +133,7 @@ class CapaNeuronas:
 ###############################################################################
 #############################        NEURONA       ############################
 ###############################################################################
-class Neurona: 
+class Neurona:
 
   def __init__(self, bias):
     self.bias = bias
@@ -141,7 +154,7 @@ class Neurona:
     return 1 / (1 + math.exp(-x))
 
   def derivada_error_respecto_entrada_total_red(self, valor_objetivo):
-    return derivada_error_respecto_salida(valor_objetivo) * derivada_funcion_logistica();
+    return self.derivada_error_respecto_salida(valor_objetivo) * self.derivada_funcion_logistica()
 
   def derivada_error_respecto_salida(self,valor_objetivo):
     return -(valor_objetivo - self.evaluacion)
@@ -156,10 +169,38 @@ class Neurona:
     return 0.5 * (valor_objetivo - self.evaluacion) ** 2
 
 
-entradas,salidas = DataSetEjercicio1.generar_data_set_lista(4)
-print entradas
-print salidas
 
-nn = RedNeural(4, 2, 2, biasNeuronas = 0.5, biasSalidas = 0.5)
-nn.alimentar_neuronas(entradas)
-nn.inspect()
+data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
+data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
+data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
+data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
+data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
+data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
+
+
+
+for j in range(2,11):
+
+  nn = RedNeural(len(data_set_3[0][0]), j, len(data_set_3[0][1]))
+  tiempo = time.time()
+
+  for i in (range(len(data_set_3))):
+    entradas_entrenamiento = data_set_3[i][0]
+    salidas_entrenamiento = data_set_3[i][1]
+    nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+
+  print(len(data_set_3[0][0]),j,nn.calcular_error_total(data_set_3),time.time() - tiempo)
+
+print "genial"
+
+
+data_set_7a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris75.data")
+data_set_7b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris75.data")
+data_set_8a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris90.data")
+data_set_8b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris90.data")
+data_set_9a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris105.data")
+data_set_9b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris105.data")
+data_set_10a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris120.data")
+data_set_10b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris120.data")
+data_set_11a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris135.data")
+

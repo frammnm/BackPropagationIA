@@ -80,4 +80,3 @@ def generar_data_set_lista(n):
     elif ((point > 49) and (ns >= n/2)):
       continue
   return puntos_y_salidas
-    
