@@ -1,4 +1,4 @@
-# Archivo: DataSetIris.py
+# Archivo: data_set_iris.py
 # Este archivo contiene el metodo generador del data Set para el ejercicio
 # 3.
 # Autores: 
@@ -27,7 +27,7 @@ def leer_data_set(nombre):
     return (xs,ys,zs,ws,salidas)
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
-    return ([],[],[],[],[])
+    sys.exit(1)
 
 # Retorna el data set normalizado y con clasificacion binaria,
 # del data set de iris.

@@ -1,4 +1,4 @@
-# Archivo: RedNeural.py
+# Archivo: red_neural.py
 # Este archivo contiene las clases utilizadas para la implementacion de una
 # red neural.
 # Autores: 
@@ -7,23 +7,20 @@
 
 import random
 import math
-import DataSetEjercicio1
-import time 
-import DataSetIris
 
 ###############################################################################
 #############################      RED NEURAL      ############################
 ###############################################################################
 class RedNeural: 
-  APRENDIZAJE = 0.5 # Constante de aprendizaje.
 
   def __init__(self, cantidadEntradas, cantidadNeuronas, cantidadSalidas, 
                pesosNeuronas = None, biasNeuronas = None, pesosSalidas = None, 
-               biasSalidas = None):
+               biasSalidas = None, aprendizaje = 0.5):
     self.cantidadEntradas = cantidadEntradas
     self.cantidadSalidas = cantidadSalidas
     self.capa_oculta = CapaNeuronas(cantidadNeuronas,biasNeuronas)
     self.capa_salida = CapaNeuronas(cantidadSalidas,biasSalidas)
+    self.APRENDIZAJE = aprendizaje
     self.inicializar_pesos_entrada_ocultos(pesosNeuronas)
     self.inicializar_pesos_ocultos_salida(pesosSalidas)
 
@@ -166,80 +163,3 @@ class Neurona:
 
   def calcular_error(self, valor_objetivo):
     return 0.5 * (valor_objetivo - self.evaluacion) ** 2
-
-data_set_1 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt")
-data_set_2 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt")
-data_set_3 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt")
-data_set_4 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/500_DataSet")
-data_set_5 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/1000_DataSet")
-data_set_6 = DataSetEjercicio1.leer_data_set("data_sets/Ejercicio1/2000_DataSet")
-
-# for j in range(2,11):
-
-#   nn = RedNeural(len(data_set_3[0][0]), j, len(data_set_3[0][1]))
-#   tiempo = time.time()
-
-#   for i in (range(len(data_set_3))):
-#     entradas_entrenamiento = data_set_3[i][0]
-#     salidas_entrenamiento = data_set_3[i][1]
-#     nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
-
-#   print(len(data_set_3[0][0]),j,nn.calcular_error_total(data_set_3)/2000,time.time() - tiempo)
-
-data_set_7a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris75.data")
-data_set_7b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris75.data")
-data_set_8a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris90.data")
-data_set_8b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris90.data")
-data_set_9a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris105.data")
-data_set_9b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris105.data")
-data_set_10a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris120.data")
-data_set_10b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris120.data")
-data_set_11a = DataSetIris.obtener_data_set_binario("data_sets/Iris-Setosa/iris135.data")
-data_set_11b = DataSetIris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris135.data")
-try:
-  f = open('Resultados_Iris_75_Binaria.txt', 'w')
-  f.write("Neuronas Error-Total Error-Promedio Tiempo\n")
-  for j in range(4,11):
-    nn = RedNeural(len(data_set_7a[0][0]), j, len(data_set_7a[0][1]))
-    tiempo = time.time()
-    i = 0
-    iteraciones = 0
-    while True:
-      entradas_entrenamiento = data_set_7a[i][0]
-      salidas_entrenamiento = data_set_7a[i][1]
-      nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
-      if i == 74:
-        i = 0
-      else:
-        i += 1
-      if (iteraciones == 10000):
-        break
-      iteraciones += 1
-    error_total = nn.calcular_error_total(data_set_7a)
-    f.write(str(j)+" "+str(error_total)+" "+str(error_total/75)+" "+str(time.time() - tiempo)+"\n")
-  f.close()
-except IOError as e:
-    print "I/O error({0}): {1}".format(e.errno, e.strerror)
-
-try:
-    f = open('Resultados_Para_Grafica_R.txt', 'w')
-    f.write("X Y Salida"+"\n")
-    
-    nn = RedNeural(len(data_set_3[0][0]), 4, len(data_set_6[0][1]))
-
-    for i in (range(len(data_set_3))):
-      entradas_entrenamiento = data_set_3[i][0]
-      salidas_entrenamiento = data_set_3[i][1]
-      nn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
-
-    print nn.calcular_error_total(data_set_3)/2000 
-
-    puntos = DataSetEjercicio1.generar_barrido_cuadrado(20)
-    for punto in puntos:
-      ptoNormalizado = [punto[0]/20,punto[1]/20]
-      salida = nn.alimentar_neuronas(ptoNormalizado)
-      x, y = punto
-      f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
-    f.close()
-except IOError as e:
-    print "I/O error({0}): {1}".format(e.errno, e.strerror)

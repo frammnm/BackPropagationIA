@@ -1,4 +1,4 @@
-# Archivo: DataSetEjercicio1.py
+# Archivo: data_set_ejercicio1.py
 # Este archivo contiene el metodo generador del data Set para el ejercicio
 # 1.
 # Autores: 
@@ -11,7 +11,7 @@ import random
 # Se crea un archivo de texto con los puntos y sus respectivas salidas.
 def generar_data_set(n):
   try:
-    f = open(str(n)+'_DataSet', 'w') 
+    f = open(str(n)+'_DataSet.txt', 'w') 
     nc = 0 # Numero de puntos dentro del circulo.
     ns = 0 # Numero de puntos dentro del cuadrado y afuera del circulo.
     for i in range(n):
@@ -32,11 +32,12 @@ def generar_data_set(n):
     return
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
+    sys.exit(1)
 
 # Lee un data set, en el archivo de texto con nombre "nombre",
 # el data set debe ser el del ejercicio 1. Durante la lectura
 # de archivo, los puntos leidos son normalizados.
-def leer_data_set(nombre):
+def obtener_data_set(nombre):
   try:
     puntos_y_salidas = []
     f = open(nombre,'r') 
@@ -55,7 +56,7 @@ def leer_data_set(nombre):
     return puntos_y_salidas
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
-    return []
+    sys.exit(1)
 
 # Genera un data set balanceado, de tamano n, para el ejercicio 1.
 # Se crea una lista de listas que contiene los puntos y sus salidas.
@@ -81,7 +82,8 @@ def generar_data_set_lista(n):
       continue
   return puntos_y_salidas
 
-# Genera un data los 10000 puntos utilizados para el ejercicio 2.
+# Genera un data set de 10000 puntos utilizados para el ejercicio 2.
+# Los cuales son utilizados para probar la red neural.
 def generar_barrido_cuadrado(n):
   puntos_y_salidas = []
   unidad = n / 100.0

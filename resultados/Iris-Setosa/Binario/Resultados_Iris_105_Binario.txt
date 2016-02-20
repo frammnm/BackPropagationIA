@@ -1,0 +1,48 @@
+Constante-de-Aprendizaje: 0.01  Neuronas: 4  Error-Total: 9.7828624023  Error-Promedio: 0.0931701181171  Tiempo: 0.519999980927
+Constante-de-Aprendizaje: 0.01  Neuronas: 5  Error-Total: 10.175313909  Error-Promedio: 0.096907751514  Tiempo: 0.560000181198
+Constante-de-Aprendizaje: 0.01  Neuronas: 6  Error-Total: 11.4811610677  Error-Promedio: 0.109344391121  Tiempo: 0.659999847412
+Constante-de-Aprendizaje: 0.01  Neuronas: 7  Error-Total: 11.0065421143  Error-Promedio: 0.104824210612  Tiempo: 0.75
+Constante-de-Aprendizaje: 0.01  Neuronas: 8  Error-Total: 11.0833263947  Error-Promedio: 0.105555489473  Tiempo: 0.850000143051
+Constante-de-Aprendizaje: 0.01  Neuronas: 9  Error-Total: 11.5379180592  Error-Promedio: 0.109884933897  Tiempo: 0.939999818802
+Constante-de-Aprendizaje: 0.01  Neuronas: 10  Error-Total: 11.3740482971  Error-Promedio: 0.108324269496  Tiempo: 1.03000020981
+
+Constante-de-Aprendizaje: 0.05  Neuronas: 4  Error-Total: 0.670634854898  Error-Promedio: 0.00638699861808  Tiempo: 0.56299996376
+Constante-de-Aprendizaje: 0.05  Neuronas: 5  Error-Total: 0.500935272648  Error-Promedio: 0.00477081212046  Tiempo: 0.59700012207
+Constante-de-Aprendizaje: 0.05  Neuronas: 6  Error-Total: 9.29298856509  Error-Promedio: 0.0885046530009  Tiempo: 0.686999797821
+Constante-de-Aprendizaje: 0.05  Neuronas: 7  Error-Total: 9.23542481576  Error-Promedio: 0.0879564268168  Tiempo: 0.796000003815
+Constante-de-Aprendizaje: 0.05  Neuronas: 8  Error-Total: 9.56305016149  Error-Promedio: 0.0910766682046  Tiempo: 0.894999980927
+Constante-de-Aprendizaje: 0.05  Neuronas: 9  Error-Total: 10.3122467278  Error-Promedio: 0.098211873598  Tiempo: 0.995000123978
+Constante-de-Aprendizaje: 0.05  Neuronas: 10  Error-Total: 10.0277579937  Error-Promedio: 0.0955024570831  Tiempo: 1.09800004959
+
+Constante-de-Aprendizaje: 0.1  Neuronas: 4  Error-Total: 0.172313925357  Error-Promedio: 0.0016410850034  Tiempo: 0.539999961853
+Constante-de-Aprendizaje: 0.1  Neuronas: 5  Error-Total: 0.209866920621  Error-Promedio: 0.00199873257734  Tiempo: 0.582999944687
+Constante-de-Aprendizaje: 0.1  Neuronas: 6  Error-Total: 11.3148224339  Error-Promedio: 0.107760213656  Tiempo: 0.680000066757
+Constante-de-Aprendizaje: 0.1  Neuronas: 7  Error-Total: 11.1811922757  Error-Promedio: 0.106487545483  Tiempo: 0.769999980927
+Constante-de-Aprendizaje: 0.1  Neuronas: 8  Error-Total: 10.4412624151  Error-Promedio: 0.0994405944292  Tiempo: 0.861000061035
+Constante-de-Aprendizaje: 0.1  Neuronas: 9  Error-Total: 8.97086149691  Error-Promedio: 0.0854367761611  Tiempo: 0.964999914169
+Constante-de-Aprendizaje: 0.1  Neuronas: 10  Error-Total: 13.0527878824  Error-Promedio: 0.124312265547  Tiempo: 1.04999995232
+
+Constante-de-Aprendizaje: 0.2  Neuronas: 4  Error-Total: 0.0788122056103  Error-Promedio: 0.000750592434384  Tiempo: 0.520000219345
+Constante-de-Aprendizaje: 0.2  Neuronas: 5  Error-Total: 0.0626095126792  Error-Promedio: 0.000596281073135  Tiempo: 0.569999933243
+Constante-de-Aprendizaje: 0.2  Neuronas: 6  Error-Total: 4.21529307334  Error-Promedio: 0.0401456483176  Tiempo: 0.680000066757
+Constante-de-Aprendizaje: 0.2  Neuronas: 7  Error-Total: 7.64533127723  Error-Promedio: 0.0728126788308  Tiempo: 0.759999990463
+Constante-de-Aprendizaje: 0.2  Neuronas: 8  Error-Total: 9.11593046347  Error-Promedio: 0.0868183853664  Tiempo: 0.869999885559
+Constante-de-Aprendizaje: 0.2  Neuronas: 9  Error-Total: 9.04683887056  Error-Promedio: 0.0861603701958  Tiempo: 0.97000002861
+Constante-de-Aprendizaje: 0.2  Neuronas: 10  Error-Total: 13.1303586419  Error-Promedio: 0.125051034685  Tiempo: 1.03699994087
+
+Constante-de-Aprendizaje: 0.3  Neuronas: 4  Error-Total: 0.0431462348773  Error-Promedio: 0.000410916522641  Tiempo: 0.563999891281
+Constante-de-Aprendizaje: 0.3  Neuronas: 5  Error-Total: 0.0369028974455  Error-Promedio: 0.000351456166147  Tiempo: 0.607000112534
+Constante-de-Aprendizaje: 0.3  Neuronas: 6  Error-Total: 9.98004084263  Error-Promedio: 0.0950480080251  Tiempo: 0.710999965668
+Constante-de-Aprendizaje: 0.3  Neuronas: 7  Error-Total: 6.07416770299  Error-Promedio: 0.057849216219  Tiempo: 0.822999954224
+Constante-de-Aprendizaje: 0.3  Neuronas: 8  Error-Total: 12.0077304173  Error-Promedio: 0.114359337308  Tiempo: 0.905999898911
+Constante-de-Aprendizaje: 0.3  Neuronas: 9  Error-Total: 19.4131371782  Error-Promedio: 0.184887020744  Tiempo: 1.01600003242
+Constante-de-Aprendizaje: 0.3  Neuronas: 10  Error-Total: 13.838005937  Error-Promedio: 0.131790532733  Tiempo: 1.13300013542
+
+Constante-de-Aprendizaje: 0.5  Neuronas: 4  Error-Total: 0.0241705774114  Error-Promedio: 0.000230195975347  Tiempo: 0.56200003624
+Constante-de-Aprendizaje: 0.5  Neuronas: 5  Error-Total: 0.0201013463578  Error-Promedio: 0.000191441393884  Tiempo: 0.618999958038
+Constante-de-Aprendizaje: 0.5  Neuronas: 6  Error-Total: 2.99177541343  Error-Promedio: 0.0284930991755  Tiempo: 0.719000101089
+Constante-de-Aprendizaje: 0.5  Neuronas: 7  Error-Total: 21.8223150587  Error-Promedio: 0.207831571988  Tiempo: 0.819999933243
+Constante-de-Aprendizaje: 0.5  Neuronas: 8  Error-Total: 16.6547370284  Error-Promedio: 0.158616543128  Tiempo: 0.911999940872
+Constante-de-Aprendizaje: 0.5  Neuronas: 9  Error-Total: 25.9269830108  Error-Promedio: 0.246923647722  Tiempo: 1.00200009346
+Constante-de-Aprendizaje: 0.5  Neuronas: 10  Error-Total: 21.0594612088  Error-Promedio: 0.200566297227  Tiempo: 1.11699986458
+
