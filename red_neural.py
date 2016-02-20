@@ -24,6 +24,18 @@ class RedNeural:
     self.inicializar_pesos_entrada_ocultos(pesosNeuronas)
     self.inicializar_pesos_ocultos_salida(pesosSalidas)
 
+  def __str__(self):
+    string = '------\n'
+    string += 'Entradas: {}\n'.format(self.cantidadEntradas)
+    string += '------\n'
+    string += 'Capa oculta\n'
+    string += str(self.capa_oculta)+"\n"
+    string += '------\n'
+    string += 'Capa salida\n'
+    string += str(self.capa_salida)+"\n"
+    string += '-------'
+    return string
+
   def inicializar_pesos_entrada_ocultos(self, pesosNeuronas):
     d = math.sqrt(6/(self.cantidadEntradas + len(self.capa_oculta.neuronas))) # Numero utilizado para el rango de los pesos.
     num_peso = 0
@@ -45,17 +57,6 @@ class RedNeural:
           else:
             self.capa_salida.neuronas[i].pesos.append(pesosSalidas[num_peso])
           num_peso += 1 
-
-  def inspect(self):
-    print('------')
-    print('Entradas: {}'.format(self.cantidadEntradas))
-    print('------')
-    print('Capa oculta')
-    self.capa_oculta.inspect()
-    print('------')
-    print('Capa salida')
-    self.capa_salida.inspect()
-    print('------')
 
   def alimentar_neuronas(self, entradas):
     salidasOcultas = self.capa_oculta.calcular_salidas(entradas)
@@ -105,14 +106,15 @@ class CapaNeuronas:
     for i in range(cantidad):
       self.neuronas.append(Neurona(self.bias))
 
-  def inspect(self):
-    print('Neuronas:', len(self.neuronas))
+  def __str__(self):
+    string = 'Neuronas: '+str(len(self.neuronas))+"\n"
     for n in range(len(self.neuronas)):
-      print(' Neurona', n)
-      print(' Evaluacion', self.neuronas[n].evaluacion)
+      string += ' Neurona '+str(n)+"\n"
+      string += ' Evaluacion '+str(self.neuronas[n].evaluacion)+"\n"
       for w in range(len(self.neuronas[n].pesos)):
-          print('  Peso:', self.neuronas[n].pesos[w])
-      print('  Bias:', self.bias)
+        string += '  Peso: '+str(self.neuronas[n].pesos[w])+"\n"
+      string += '  Bias: '+str(self.bias)+"\n"
+    return string
 
   def calcular_salidas(self, entradas):
     salidas = []

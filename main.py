@@ -24,8 +24,7 @@ def generar_resultados(nombre,const_aprendizaje,num_iteraciones,
       	                        aprendizaje = const_aprendizaje)
       tiempo = time.time()
       i = 0
-      iteraciones = 0
-      while True:
+      for k in range(num_iteraciones):
         entradas_entrenamiento = data_set[i][0]
         salidas_entrenamiento = data_set[i][1]
         rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
@@ -33,9 +32,6 @@ def generar_resultados(nombre,const_aprendizaje,num_iteraciones,
           i = 0
         else:
           i += 1
-        if (iteraciones == num_iteraciones-1):
-          break
-        iteraciones += 1
       error_total = rn.calcular_error_total(data_set)
       resultado = str1+str(const_aprendizaje)+str2+str(j)+str3+str(error_total)
       resultado += str4+str(error_total/len(data_set))+str5
@@ -90,9 +86,8 @@ def generar_resultados_cambio_del_error(nombre,data_set,const_aprendizaje,
     f = open(nombre, 'w')
     rn = red_neural.RedNeural(len(data_set[0][0]), neuronas, len(data_set[0][1]),
       	                        aprendizaje = const_aprendizaje)
-	i = 0
-	iteraciones = 0
-	while True:
+    i = 0
+    for j in range(num_iteraciones):
       entradas_entrenamiento = data_set[i][0]
       salidas_entrenamiento = data_set[i][1]
       rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
@@ -100,11 +95,8 @@ def generar_resultados_cambio_del_error(nombre,data_set,const_aprendizaje,
         i = 0
       else:
         i += 1
-      if (iteraciones == num_iteraciones-1):
-        break
-      iteraciones += 1
       error_total = rn.calcular_error_total(data_set)
-      f.write(str(iteraciones)+" "+str(error_total))
+      f.write(str(j+1)+" "+str(error_total)+"\n")
     f.close()
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)

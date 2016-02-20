@@ -11,6 +11,8 @@ import random
 # Se crea un archivo de texto con los puntos y sus respectivas salidas.
 def generar_data_set(n):
   try:
+    if n % 2 != 0:
+      n += 1
     f = open(str(n)+'_DataSet.txt', 'w') 
     nc = 0 # Numero de puntos dentro del circulo.
     ns = 0 # Numero de puntos dentro del cuadrado y afuera del circulo.
@@ -61,6 +63,8 @@ def obtener_data_set(nombre):
 # Genera un data set balanceado, de tamano n, para el ejercicio 1.
 # Se crea una lista de listas que contiene los puntos y sus salidas.
 def generar_data_set_lista(n):
+  if n % 2 != 0:
+    n += 1
   puntos_y_salidas = []
   nc = 0 # Numero de puntos dentro del circulo.
   ns = 0 # Numero de puntos dentro del cuadrado y afuera del circulo.
