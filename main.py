@@ -60,16 +60,46 @@ def generar_resultados_ejercicio3(nombres_de_archivos,data_sets,
     	               10000,4,10,data_sets[i])
 
 # Genera los resultados para una barrida de 10000 puntos, utilizando
-# los data sets del ejercicio 1.
-def generar_resultados_barrida(nombre,rn):
+# los data sets del ejercicio 1, utilizando la normalizacion z score.
+def generar_resultados_barrida_z_score(rn):
+  xs,ys = data_set_ejercicio1.generar_barrido_cuadrado(20)
+  mean_xs = sum(xs)/len(xs)
+  mean_ys = sum(ys)/len(ys)
+  sd_xs = ((sum([ (x_i - mean_xs)**2 for x_i in xs]))/len(xs))**0.5
+  sd_ys = ((sum([ (y_i - mean_ys)**2 for y_i in ys]))/len(ys))**0.5
+  salidas = []
+  for i in range(len(xs)):
+    xn = (xs[i]-mean_xs)/sd_xs
+    yn = (ys[i]-mean_ys)/sd_ys
+    salidas.append(rn.alimentar_neuronas([xn,yn])[0])
+  return (xs,ys,salidas)
+
+# Genera los resultados para una barrida de 10000 puntos, utilizando
+# los data sets del ejercicio 1, utilizando la normalizacion minmax.
+def generar_resultados_barrida_minmax(rn):
+  xs,ys = data_set_ejercicio1.generar_barrido_cuadrado(20)
+  salidas = []
+  for i in range(len(xs)):
+    xn = (xs[i]-min(xs))/(max(xs)-min(xs))
+    yn = (ys[i]-min(ys))/(max(ys)-min(ys))
+    salidas.append(rn.alimentar_neuronas([xn,yn])[0])
+  return (xs,ys,salidas)
+
+# Genera los resultados para una barrida de 10000 puntos, utilizando
+# los data sets del ejercicio 1 y los escribe en el archivo de texto.
+def generar_resultados_barrida(nombre,opcion,rn):
   try:
+    if opcion == 0:
+      xs,ys,salidas = generar_resultados_barrida_minmax(rn)
+    else:
+      xs,ys,salidas = generar_resultados_barrida_z_score(rn)
     f = open(nombre, 'w')
-    puntos = data_set_ejercicio1.generar_barrido_cuadrado(20)
-    for punto in puntos:
-      ptoNormalizado = [punto[0]/20,punto[1]/20]
-      salida = rn.alimentar_neuronas(ptoNormalizado)
-      x, y = punto
-      f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
+    umbral = (max(salidas) + min(salidas))/2
+    for i in range(len(xs)):
+      if salidas[i] <= umbral:
+        f.write(str(xs[i])+" "+str(ys[i])+" 0\n")
+      else:
+        f.write(str(xs[i])+" "+str(ys[i])+" 1\n")
     f.close()
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -124,22 +154,22 @@ def obtener_mejor_red_neural(data_set,neuronas,constantes_de_aprendizaje):
   return mejor_red_neural
 
 data_sets = [ 
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt"),
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt"),
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt"),
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/500_DataSet.txt"),
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/1000_DataSet.txt"),
-  data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/2000_DataSet.txt"),
-  data_set_iris.obtener_data_set_binario("data_sets/Iris-Setosa/iris75.data"),
-  data_set_iris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris75.data"),
-  data_set_iris.obtener_data_set_binario("data_sets/Iris-Setosa/iris90.data"),
-  data_set_iris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris90.data"),
-  data_set_iris.obtener_data_set_binario("data_sets/Iris-Setosa/iris105.data"),
-  data_set_iris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris105.data"),
-  data_set_iris.obtener_data_set_binario("data_sets/Iris-Setosa/iris120.data"),
-  data_set_iris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris120.data"),
-  data_set_iris.obtener_data_set_binario("data_sets/Iris-Setosa/iris135.data"),
-  data_set_iris.obtener_data_set_ternario("data_sets/Iris-Setosa/iris135.data")
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt"),
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt"),
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt"),
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/500_DataSet.txt"),
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/1000_DataSet.txt"),
+  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/2000_DataSet.txt"),
+  data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris75.data"),
+  data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris75.data"),
+  data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris90.data"),
+  data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris90.data"),
+  data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris105.data"),
+  data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris105.data"),
+  data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris120.data"),
+  data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris120.data"),
+  data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris135.data"),
+  data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris135.data")
 ]
 nombres_de_archivos = [
   "resultados/Ejercicio1/Resultados_Profesora_500.txt",
@@ -162,7 +192,7 @@ nombres_de_archivos = [
 
 constantes_de_aprendizaje = [0.01,0.05,0.1,0.2,0.3,0.5]
 
-# Esta parte sirve para generar todos los resultados posibles de todos los data sets.
+# # Esta parte sirve para generar todos los resultados posibles de todos los data sets.
 # for const_aprendizaje in constantes_de_aprendizaje:
 #   generar_resultados_ejercicio1(nombres_de_archivos,data_sets,const_aprendizaje)
 #   generar_resultados_ejercicio3(nombres_de_archivos,data_sets,const_aprendizaje)
@@ -174,32 +204,33 @@ constantes_de_aprendizaje = [0.01,0.05,0.1,0.2,0.3,0.5]
 # generar_resultados_cambio_del_error(nombres_de_archivos_de_error[0],data_sets[2],constantes_de_aprendizaje[1],10,10000)
 # generar_resultados_cambio_del_error(nombres_de_archivos_de_error[1],data_sets[5],constantes_de_aprendizaje[0],10,10000)
 
-# red_neural1 = obtener_mejor_red_neural(data_sets[2], 2, constantes_de_aprendizaje)
-# red_neural2 = obtener_mejor_red_neural(data_sets[5], 10, constantes_de_aprendizaje)
-
-# print red_neural1
-# print red_neural2
-
-# nombres_de_archivos_de_barrida = [
-#   "resultados/10000-Puntos/Resultados_Profesora.txt",
-#   "resultados/10000-Puntos/Resultados_Nosotros.txt"
-# ]
-
-# generar_resultados_barrida(nombres_de_archivos_de_barrida[0],red_neural1)
-# generar_resultados_barrida(nombres_de_archivos_de_barrida[1],red_neural2)
-
-xor_data_set = [
-    [[0, 0], [0]],
-    [[0, 1], [1]],
-    [[1, 0], [1]],
-    [[1, 1], [0]]
+nombres_de_archivos_de_barrida = [
+  "resultados/10000-Puntos/Resultados_Profesora.txt",
+  "resultados/10000-Puntos/Resultados_Nosotros.txt"
 ]
 
-rn = red_neural.RedNeural(len(xor_data_set[0][0]), 5, len(xor_data_set[0][1]))
-for i in range(10000):
-    training_inputs, training_outputs = random.choice(xor_data_set)
-    rn.entrenar(training_inputs, training_outputs)
-    print str(i)+" "+ str(nn.calcular_error_total(xor_data_set)/len(xor_data_set))
+rn = red_neural.RedNeural(len(data_sets[2][0][0]), 10, len(data_sets[2][0][1]), aprendizaje=0.01)
+i = 0
+for k in range(100000):
+  entradas_entrenamiento = data_sets[2][i][0]
+  salidas_entrenamiento = data_sets[2][i][1]
+  rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+  if i == len(data_sets[2])-1:
+    i = 0
+  else:
+    i += 1
 
-print rn.alimentar_neuronas([1,0])
-print rn.alimentar_neuronas([0,1])
+generar_resultados_barrida(nombres_de_archivos_de_barrida[0],1,rn)
+
+rn = red_neural.RedNeural(len(data_sets[5][0][0]), 10, len(data_sets[5][0][1]), aprendizaje=0.01)
+i = 0
+for k in range(100000):
+  entradas_entrenamiento = data_sets[5][i][0]
+  salidas_entrenamiento = data_sets[5][i][1]
+  rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+  if i == len(data_sets[5])-1:
+    i = 0
+  else:
+    i += 1
+
+generar_resultados_barrida(nombres_de_archivos_de_barrida[1],1,rn)

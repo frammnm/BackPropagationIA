@@ -29,9 +29,33 @@ def leer_data_set(nombre):
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
     sys.exit(1)
 
-# Retorna el data set normalizado y con clasificacion binaria,
+# Retorna el data set normalizado con z score y con clasificacion binaria,
 # del data set de iris.
-def obtener_data_set_binario(nombre):
+def obtener_data_set_binario_z_score(nombre):
+  xs,ys,zs,ws,salidas = leer_data_set(nombre)
+  res = []
+  mean_xs = sum(xs)/len(xs)
+  mean_ys = sum(ys)/len(ys)
+  mean_zs = sum(zs)/len(zs)
+  mean_ws = sum(ws)/len(ws)
+  sd_xs = ((sum([ (x_i - mean_xs)**2 for x_i in xs]))/len(xs))**0.5
+  sd_ys = ((sum([ (y_i - mean_ys)**2 for y_i in ys]))/len(ys))**0.5
+  sd_zs = ((sum([ (z_i - mean_zs)**2 for z_i in zs]))/len(zs))**0.5
+  sd_ws = ((sum([ (w_i - mean_ws)**2 for w_i in ws]))/len(ws))**0.5
+  for i in range(len(xs)):
+    xn = (xs[i]-mean_xs)/sd_xs
+    yn = (ys[i]-mean_ys)/sd_ys
+    zn = (zs[i]-mean_zs)/sd_zs
+    wn = (ws[i]-mean_ws)/sd_ws
+    if ((salidas[i] == "Iris-setosa\n") or (salidas[i] == "Iris-setosa")):
+      res.append([[xn,yn,zn,wn],[1]])
+    else:
+      res.append([[xn,yn,zn,wn],[0]])
+  return res
+
+# Retorna el data set normalizado con minmax y con clasificacion ternaria,
+# del data set de iris.
+def obtener_data_set_binario_minmax(nombre):
   xs,ys,zs,ws,salidas = leer_data_set(nombre)
   res = []
   for i in range(len(xs)):
@@ -45,9 +69,35 @@ def obtener_data_set_binario(nombre):
       res.append([[xn,yn,zn,wn],[0]])
   return res
 
-# Retorna el data set normalizado y con clasificacion ternaria,
+# Retorna el data set normalizado con z score y con clasificacion ternaria,
 # del data set de iris.
-def obtener_data_set_ternario(nombre):
+def obtener_data_set_ternario_z_score(nombre):
+  xs,ys,zs,ws,salidas = leer_data_set(nombre)
+  res = []
+  mean_xs = sum(xs)/len(xs)
+  mean_ys = sum(ys)/len(ys)
+  mean_zs = sum(zs)/len(zs)
+  mean_ws = sum(ws)/len(ws)
+  sd_xs = ((sum([ (x_i - mean_xs)**2 for x_i in xs]))/len(xs))**0.5
+  sd_ys = ((sum([ (y_i - mean_ys)**2 for y_i in ys]))/len(ys))**0.5
+  sd_zs = ((sum([ (z_i - mean_zs)**2 for z_i in zs]))/len(zs))**0.5
+  sd_ws = ((sum([ (w_i - mean_ws)**2 for w_i in ws]))/len(ws))**0.5
+  for i in range(len(xs)):
+    xn = (xs[i]-mean_xs)/sd_xs
+    yn = (ys[i]-mean_ys)/sd_ys
+    zn = (zs[i]-mean_zs)/sd_zs
+    wn = (ws[i]-mean_ws)/sd_ws
+    if ((salidas[i] == "Iris-setosa\n") or (salidas[i] == "Iris-setosa")):
+      res.append([[xn,yn,zn,wn],[1]])
+    elif ((salidas[i] == "Iris-versicolor\n") or (salidas[i] == "Iris-versicolor")):
+      res.append([[xn,yn,zn,wn],[0.5]])
+    else:
+      res.append([[xn,yn,zn,wn],[0]])
+  return res
+
+# Retorna el data set normalizado con minmax y con clasificacion ternaria,
+# del data set de iris.
+def obtener_data_set_ternario_minmax(nombre):
   xs,ys,zs,ws,salidas = leer_data_set(nombre)
   res = []
   for i in range(len(xs)):
