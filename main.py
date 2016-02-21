@@ -8,6 +8,8 @@ import red_neural
 import data_set_ejercicio1
 import data_set_iris
 import time
+import sys
+import random
 
 # Genera los resultados de entrenar la red neural con los data sets.
 def generar_resultados(nombre,const_aprendizaje,num_iteraciones,
@@ -59,21 +61,15 @@ def generar_resultados_ejercicio3(nombres_de_archivos,data_sets,
 
 # Genera los resultados para una barrida de 10000 puntos, utilizando
 # los data sets del ejercicio 1.
-def generar_resultados_barrida(data_set,const_aprendizaje,neuronas):
+def generar_resultados_barrida(nombre,rn):
   try:
-    f = open('resultados/10000-Puntos/Resultados_Para_Grafica_R.txt', 'w')
-    rn = red_neural.RedNeural(len(data_set[0][0]), neuronas, len(data_set[0][1]), 
-    	           aprendizaje = const_aprendizaje)
-    for i in (range(len(data_set))):
-      entradas_entrenamiento = data_set[i][0]
-      salidas_entrenamiento = data_set[i][1]
-      rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
-      puntos = data_set_ejercicio1.generar_barrido_cuadrado(20)
-      for punto in puntos:
-        ptoNormalizado = [punto[0]/20,punto[1]/20]
-        salida = rn.alimentar_neuronas(ptoNormalizado)
-        x, y = punto
-        f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
+    f = open(nombre, 'w')
+    puntos = data_set_ejercicio1.generar_barrido_cuadrado(20)
+    for punto in puntos:
+      ptoNormalizado = [punto[0]/20,punto[1]/20]
+      salida = rn.alimentar_neuronas(ptoNormalizado)
+      x, y = punto
+      f.write(str(x)+" "+str(y)+" "+str(salida[0])+"\n")
     f.close()
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -101,6 +97,31 @@ def generar_resultados_cambio_del_error(nombre,data_set,const_aprendizaje,
   except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
     sys.exit(1)
+
+# Obtiene la red neural con el menor error, variando la constante de aprendizaje.
+def obtener_mejor_red_neural(data_set,neuronas,constantes_de_aprendizaje):
+  error = sys.maxint
+  mejor_red_neural = None
+  for const_aprendizaje in constantes_de_aprendizaje:
+    rn = red_neural.RedNeural(len(data_set[0][0]), neuronas, len(data_set[0][1]),
+                                  aprendizaje = const_aprendizaje)
+    i = 0
+    error_total_actual = sys.maxint
+    while error_total_actual > 0.001:
+      entradas_entrenamiento = data_set[i][0]
+      salidas_entrenamiento = data_set[i][1]
+      rn.entrenar(entradas_entrenamiento, salidas_entrenamiento)
+      if i == len(data_set)-1:
+        i = 0
+      else:
+        i += 1
+      error_total_actual = rn.calcular_error_total(data_set)/len(data_set)
+      print error_total_actual
+    error_total_final = rn.calcular_error_total(data_set)
+    if error_total_final < error:
+      error = error_total_final
+      mejor_red_neural = rn
+  return mejor_red_neural
 
 data_sets = [ 
   data_set_ejercicio1.obtener_data_set("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt"),
@@ -146,9 +167,39 @@ constantes_de_aprendizaje = [0.01,0.05,0.1,0.2,0.3,0.5]
 #   generar_resultados_ejercicio1(nombres_de_archivos,data_sets,const_aprendizaje)
 #   generar_resultados_ejercicio3(nombres_de_archivos,data_sets,const_aprendizaje)
 
-nombres_de_archivos_de_error = [
-  'resultados/Error/Resultados_Cambio_del_Error_2000_Profesora.txt',
-  'resultados/Error/Resultados_Cambio_del_Error_2000_Nosotros.txt'
+# nombres_de_archivos_de_error = [
+#   'resultados/Error/Resultados_Cambio_del_Error_2000_Profesora.txt',
+#   'resultados/Error/Resultados_Cambio_del_Error_2000_Nosotros.txt'
+# ]
+# generar_resultados_cambio_del_error(nombres_de_archivos_de_error[0],data_sets[2],constantes_de_aprendizaje[1],10,10000)
+# generar_resultados_cambio_del_error(nombres_de_archivos_de_error[1],data_sets[5],constantes_de_aprendizaje[0],10,10000)
+
+# red_neural1 = obtener_mejor_red_neural(data_sets[2], 2, constantes_de_aprendizaje)
+# red_neural2 = obtener_mejor_red_neural(data_sets[5], 10, constantes_de_aprendizaje)
+
+# print red_neural1
+# print red_neural2
+
+# nombres_de_archivos_de_barrida = [
+#   "resultados/10000-Puntos/Resultados_Profesora.txt",
+#   "resultados/10000-Puntos/Resultados_Nosotros.txt"
+# ]
+
+# generar_resultados_barrida(nombres_de_archivos_de_barrida[0],red_neural1)
+# generar_resultados_barrida(nombres_de_archivos_de_barrida[1],red_neural2)
+
+xor_data_set = [
+    [[0, 0], [0]],
+    [[0, 1], [1]],
+    [[1, 0], [1]],
+    [[1, 1], [0]]
 ]
-generar_resultados_cambio_del_error(nombres_de_archivos_de_error[0],data_sets[2],constantes_de_aprendizaje[1],10,10000)
-generar_resultados_cambio_del_error(nombres_de_archivos_de_error[1],data_sets[5],constantes_de_aprendizaje[0],10,10000)
+
+rn = red_neural.RedNeural(len(xor_data_set[0][0]), 5, len(xor_data_set[0][1]))
+for i in range(10000):
+    training_inputs, training_outputs = random.choice(xor_data_set)
+    rn.entrenar(training_inputs, training_outputs)
+    print str(i)+" "+ str(nn.calcular_error_total(xor_data_set)/len(xor_data_set))
+
+print rn.alimentar_neuronas([1,0])
+print rn.alimentar_neuronas([0,1])

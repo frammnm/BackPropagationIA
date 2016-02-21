@@ -76,11 +76,13 @@ class RedNeural:
         sumaError += erroresDerivadasRespectoNeuronasSalidas[j] * self.capa_salida.neuronas[j].pesos[i]
       erroresDerivadasRespectoNeuronasOcultas[i] = sumaError * self.capa_oculta.neuronas[i].derivada_funcion_logistica()
 
+    # Actualizar los pesos de la capa de salida.
     for i in range(len(self.capa_salida.neuronas)):
       for j in range(len(self.capa_salida.neuronas[i].pesos)):
         errorRespectoPeso = erroresDerivadasRespectoNeuronasSalidas[i] * self.capa_salida.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
         self.capa_salida.neuronas[i].pesos[j] -= self.APRENDIZAJE * errorRespectoPeso
 
+    # Actualizar los pesos de la capa oculta.
     for i in range(len(self.capa_oculta.neuronas)):
       for j in range(len(self.capa_oculta.neuronas[i].pesos)):
         errorRespectoPeso = erroresDerivadasRespectoNeuronasOcultas[i] * self.capa_oculta.neuronas[i].derivada_entrada_total_red_respecto_peso(j)
