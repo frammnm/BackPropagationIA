@@ -1,6 +1,5 @@
-# Archivo: data_set_ejercicio1.py
-# Este archivo contiene el metodo generador del data Set para el ejercicio
-# 1.
+# Archivo: data_set_circulo.py
+# Este archivo contiene el metodo generador del data Set del circulo.
 # Autores: 
 #    - Francisco Martinez 09-10502
 #    - Gabriel   Alvarez  09-10029

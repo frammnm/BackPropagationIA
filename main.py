@@ -5,7 +5,7 @@
 #    - Gabriel   Alvarez  09-10029
 
 import red_neural
-import data_set_ejercicio1
+import data_set_circulo
 import data_set_iris
 import time
 import sys
@@ -62,7 +62,7 @@ def generar_resultados_ejercicio3(nombres_de_archivos,data_sets,
 # Genera los resultados para una barrida de 10000 puntos, utilizando
 # los data sets del ejercicio 1, utilizando la normalizacion z score.
 def generar_resultados_barrida_z_score(rn):
-  xs,ys = data_set_ejercicio1.generar_barrido_cuadrado(20)
+  xs,ys = data_set_circulo.generar_barrido_cuadrado(20)
   mean_xs = sum(xs)/len(xs)
   mean_ys = sum(ys)/len(ys)
   sd_xs = ((sum([ (x_i - mean_xs)**2 for x_i in xs]))/len(xs))**0.5
@@ -77,7 +77,7 @@ def generar_resultados_barrida_z_score(rn):
 # Genera los resultados para una barrida de 10000 puntos, utilizando
 # los data sets del ejercicio 1, utilizando la normalizacion minmax.
 def generar_resultados_barrida_minmax(rn):
-  xs,ys = data_set_ejercicio1.generar_barrido_cuadrado(20)
+  xs,ys = data_set_circulo.generar_barrido_cuadrado(20)
   salidas = []
   for i in range(len(xs)):
     xn = (xs[i]-min(xs))/(max(xs)-min(xs))
@@ -154,12 +154,12 @@ def obtener_mejor_red_neural(data_set,neuronas,constantes_de_aprendizaje):
   return mejor_red_neural
 
 data_sets = [ 
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt"),
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt"),
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt"),
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/500_DataSet.txt"),
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/1000_DataSet.txt"),
-  data_set_ejercicio1.obtener_data_set_z_score("data_sets/Ejercicio1/2000_DataSet.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n500.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n1000.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/datos_P1_RN_EM2016_n2000.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/500_DataSet.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/1000_DataSet.txt"),
+  data_set_circulo.obtener_data_set_z_score("data_sets/Ejercicio1/2000_DataSet.txt"),
   data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris75.data"),
   data_set_iris.obtener_data_set_ternario_z_score("data_sets/Iris-Setosa/iris75.data"),
   data_set_iris.obtener_data_set_binario_z_score("data_sets/Iris-Setosa/iris90.data"),
