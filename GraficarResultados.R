@@ -1,8 +1,10 @@
 
 
-datos= read.table("archivo.txt") 
+dd = read.table("resultados/10000-Puntos/Resultados_Nosotros.txt") 
 
-attach(d)
-names(d)
-
-plot(d[ d$V3 == "1" ,]$V1,d[ d$V3 == "-1" ,]$V2,main="Distribucion de predicciones",col=c("black","firebrick3"),pch=16,sub="Negro positivas,Rojo negativas")
+attach(dd)
+names(dd)
+plot(0:20,0:20,type = "n",main="Distribucion de predicciones",sub="Morado positivas,Gris negativas")
+symbols(10,10,7,add=TRUE)
+points(dd[ dd$V3 == "1" ,]$V1,dd[ dd$V3 == "1" ,]$V2,col="mediumorchid3",pch=3)
+points(dd[ dd$V3 == "0" ,]$V1,dd[ dd$V3 == "0" ,]$V2,col="dimgray",pch=4)
